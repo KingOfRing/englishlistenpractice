@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html">
+	<meta charset="utf-8">
+	<title>插入语句</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/lib/jquery.min.js" type="text/javascript"></script>
+    <script type='text/javascript' src='/lib/jquery.form.js'></script>
+    <link href="/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <link href="/lib/ligerUI/skins/Gray2014/css/all.css" rel="stylesheet" type="text/css" />
+    <script src="/lib/ligerUI/js/core/base.js" type="text/javascript"></script>
+    <script src="/lib/ligerUI/js/ligerui.min.js" type="text/javascript"></script>
+    <script src="/js/public.js" type="text/javascript" ></script>
+	<script src="/js/listen/sentenceEdit.js" type="text/javascript"></script>
+	<style type="text/css">
+	 	body {
+            font-size: 15px;
+        }
+		input{ 
+			vertical-align:middle; 
+			margin:0; 
+			padding:0
+		}
+		.file-box{
+			position:relative;
+			width:620px; 
+			solid #cdcdcd;}
+		.text-label{ 
+			width:70px;
+			font-size: 14px;
+			background-color:#FFF;}
+		.path{ 
+			background-color:#FFF;
+			border:1px solid #CDCDCD;
+			height:30px; 
+			width:400px;}
+		.browse{ 
+			background-color:#FFF; 
+			border:1px solid #CDCDCD;
+			height:30px; 
+			width:100px;
+		}
+		.file{ 
+			position:absolute; 
+			top:0; 
+			right:20px; 
+			height:24px; 
+			filter:alpha(opacity:0);
+			opacity: 0;
+			width:500px 
+		}
+	</style>
+</head>
+<body>
+	<div class="main-container" style="margin: 0 auto; margin-top: 30px">
+		<div style="margin-left: 10%" class="text-left" >
+			<form class="form-horizontal"  role="form" id="sentenceForm" enctype="multipart/form-data">
+				<div class="form-group"></div>
+				<!-- <div class="form-group">
+			      <label for="bookName">课本名称：</label>
+			      <input type="text" class="path" id="bookName" name="bookName" disabled="true" ></input>
+			    </div>
+				<div class="form-group">
+			      <label for="articleTitle">文章名称：</label>
+			      <input type="text" class="path" id="articleTitle" name="articleTitle"
+			     readonly="true" ></input>
+			    </div> -->
+			    <div class="file-box form-group">
+					<label for="english" class="text-label" style="float:left;">输入英文:</label>
+					<textarea id="english" name="english" style="width:400px;float:left;margin-left: 6px" rows="3"></textarea>
+				</div>	
+				<div class="file-box form-group">
+					<label for="chinese" class="text-label" style="float:left;">输入中文:</label>
+					<textarea id="chinese" name="chinese" style="width:400px;float:left;margin-left: 6px" rows="3"></textarea>
+				</div>	
+				<div class="file-box form-group">
+					<label class="text-label">选择语音:</label>
+					<input type='text' id='voicePath'  class='path' />
+					<input type='button' class='browse' value='浏 览...' />
+					<input type="hidden" name="max_file_size" value="10000000"/>
+					<input type="file" name="voiceFile" class="file"  onchange="$('#voicePath').val(this.value)" /> 
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

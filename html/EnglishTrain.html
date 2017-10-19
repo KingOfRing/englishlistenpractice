@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>口语练习后台</title>
+    <meta charset="utf-8>">
+    <link href="../lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <link href="../lib/ligerUI/skins/Gray2014/css/all.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css"  />
+    <script src="../lib/jquery.min.js" type="text/javascript"></script>
+    <script src="../lib/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../lib/ligerUI/js/ligerui.min.js" type="text/javascript"></script>
+    <script src="../lib/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
+    <script src="../lib/ligerUI/js/plugins/ligerTextBox.js" type="text/javascript"></script>
+    <script src="../lib/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
+    <script src="../lib/ligerUI/js/plugins/ligerGrid.js" type="text/javascript"></script>
+    <script src="../js/public.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+        //window.open("Loading.html", "newwin", "height=250, width=250,toolbar=no,menubar=no");
+        var tab = null;
+        var accordion = null;
+        var tree = null;
+        $(function () {
+            //布局
+            if(!isSession()){
+                location.href = '/index.html';
+                return ;
+            }
+            else{
+                $('#userName').html(getUserName());
+            }
+            $("#logout").click(function(){
+                delSession();
+                location.href = '/index.html';
+            });
+
+            $("#layout").ligerLayout({ leftWidth: 150, height: '100%', heightDiff: -2, space: 5});
+            var height = $(".l-layout-center").height();
+            //Tab
+            $("#framecenter").ligerTab({
+                height: height,
+                showSwitchInTab: true,
+                showSwitch: true,
+            });
+            //面板
+            $("#accordion").ligerAccordion({ height: height - 31, speed: null });
+            $(".l-link").hover(function () {
+                $(this).addClass("l-link-over");
+            }, function () {
+                $(this).removeClass("l-link-over");
+            });
+            //树
+            var data = [];
+            //data.push({ id: 1, pid: 0, text: '学生管理', url: "UserManage.html" });
+            //data.push({ id: 2, pid: 0, text: '成绩管理', url: "ScoreQuery.html" });
+            data.push({ id: 3, pid: 0, text: '口语素材管理', url: "" });
+            data.push({ id: 4, pid: 3, text: '分类管理', url: "speak/CategoryManage.html" });
+            data.push({ id: 5, pid: 3, text: '课本管理', url: "speak/BookManage.html" });
+            data.push({ id: 6, pid: 3, text: '文章管理', url: "speak/ArticleManage.html" });
+            data.push({ id: 7, pid: 3, text: '语句管理', url: "speak/SentenceManage.html" });
+            data.push({ id: 8, pid: 0, text: '听力素材管理', url: "" });
+            data.push({ id: 9, pid: 8, text: '分类管理', url: "listen/CategoryManage.html" });
+            data.push({ id: 10, pid: 8, text: '课本管理', url: "listen/BookManage.html" });
+            data.push({ id: 11, pid: 8, text: '单元管理', url: "listen/UnitManage.html" });
+            data.push({ id: 12, pid: 8, text: '章节管理', url: "listen/SectionManage.html" });
+            data.push({ id: 13, pid: 8, text: '语句管理', url: "listen/SentenceManage.html" });
+            $("#tree").ligerTree({
+                data: data,
+                idFieldName: 'id',
+                slide: false,
+                parentIDFieldName: 'pid',
+                checkbox: false,
+                slide: false,
+                nodeWidth: 100,
+                attribute: ['text', 'url'],
+                onSelect: function (node) {
+                    if (!node.data.url) return;
+                    $("#frame").attr('src',node.data.url); 
+                    $("#title").html(node.data.text);
+                }
+            });
+            tab = $("#framecenter").ligerGetTabManager();
+            tree = $("#tree1").ligerGetTreeManager();
+            //$("#pageloading").hide();
+
+        });
+        function f_addTab(tabid, text, url) {
+            tab.addTabItem({ tabid: tabid, text: text, url: url });
+        }
+    </script>
+    <style type="text/css">
+        body, html {
+            height: 100%;
+        }
+        body {
+            padding: 0px;
+            margin: 0;
+            overflow: hidden;
+        }
+        .banner{
+            background:#438eb9;
+        }
+    </style>
+</head>
+<body style="padding: 0px; background: #EAEEF5;">
+   <nav class="navbar navbar-default" role="navigation">
+       <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+          <small style="color:#000;font-size:1.2em">口语练习后台管理</small>
+          </a>
+       </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               <small style="color:#888;font-size:1.5em" id="userName">Admin</small>
+               <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="" id="logout">退出</a></li>
+            </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layout" style="width: 100%; margin: 0 auto; margin-top: -20px;">
+        <div position="left" title="主菜单" id="accordion" style="overflow: auto; ">
+            <ul id="tree" style="margin-top: 3px;"></ul>
+        </div>
+       <!--  <div position="center" id="framecenter" style="overflow: hidden"> -->
+       <div position="center"   style="overflow: hidden" >
+            <h4 id="title" align="center">分类管理</h4>
+            <iframe src="speak/CategoryManage.html" style="width: 100%;height: 93%;border-color: transparent;" id="frame"></iframe>
+        </div>
+        <div position="bottom"  style=" text-align:center;margin-top: 10px; ">版权所有  2016  西安科技大学高新学院
+        </div>
+    </div>
+</body>
+</html>
